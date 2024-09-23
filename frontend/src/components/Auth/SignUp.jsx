@@ -22,81 +22,27 @@ export default function SignUp() {
     let valid = true;
 
     if (!Fname) {
-      toast.info("🦄 First name is required!", {
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.info("🦄 First name is required!", { autoClose: 2000 });
       valid = false;
     }
     if (!Lname) {
-      toast.info("🦄 Last name is required!", {
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.info("🦄 Last name is required!", { autoClose: 2000 });
       valid = false;
     }
     if (!username) {
-      toast.info("🦄 Username is required!", {
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.info("🦄 Username is required!", { autoClose: 2000 });
       valid = false;
     }
     if (!email) {
-      toast.info("🦄 Email is required!", {
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.info("🦄 Email is required!", { autoClose: 2000 });
       valid = false;
     }
     if (!password) {
-      toast.info("🦄 Password is required!", {
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.info("🦄 Password is required!", { autoClose: 2000 });
       valid = false;
     }
     if (!accept) {
-      toast.info("🦄 Regulation must be accepted!", {
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
+      toast.info("🦄 Regulation must be accepted!", { autoClose: 2000 });
       valid = false;
     }
 
@@ -121,7 +67,7 @@ export default function SignUp() {
             setPassword("");
             setAccept(false); // Reset the checkbox state
             setTimeout(() => {
-              navigate("/login"); // Uncomment to redirect to login page
+              navigate("/login");
             }, 4000);
           }
         } else {
@@ -134,42 +80,9 @@ export default function SignUp() {
   };
 
   return (
-    <main className="flex items-center justify-center h-screen w-full text-white relative bg-gradient-to-br from-gray-800 to-black">
+    <main className="flex items-center justify-center h-screen w-full text-white bg-gradient-to-br from-gray-800 to-black p-4 md:p-0 relative">
       <style>{`
-        @keyframes gradientAnimation {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-
-        .glassmorphism-container {
-          background: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(15px);
-          border-radius: 20px;
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          padding: 60px;
-          max-width: 90%; /* Limit the width on smaller screens */
-          margin: auto; /* Center align */
-          box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .glassmorphism-container > .content {
-          backdrop-filter: blur(10px);
-          padding: 3rem; /* Adjust padding */
-        }
-
-        .floating-3d-image {
-          position: absolute;
-          animation: floatAnimation 6s ease-in-out infinite;
-        }
-
-        @keyframes floatAnimation {
+        @keyframes float {
           0%, 100% {
             transform: translateY(0);
           }
@@ -177,39 +90,10 @@ export default function SignUp() {
             transform: translateY(-10px);
           }
         }
-
-        /* Responsive styles */
-        @media (max-width: 768px) {
-          .glassmorphism-container {
-            padding: 30px; /* Adjust padding */
-          }
-
-          .glassmorphism-container > .content {
-            padding: 2rem; /* Adjust padding */
-          }
-
-          .floating-3d-image {
-            width: 100px; /* Adjust size */
-          }
-        }
-
-        @media (max-width: 480px) {
-          .glassmorphism-container {
-            padding: 20px; /* Further adjust padding */
-          }
-
-          .glassmorphism-container > .content {
-            padding: 1rem; /* Further adjust padding */
-          }
-
-          .floating-3d-image {
-            width: 80px; /* Further adjust size */
-          }
-        }
       `}</style>
 
       {/* Left Section with Form */}
-      <section className="glassmorphism-container z-10">
+      <section className="glassmorphism-container z-10 bg-white/10 backdrop-blur-lg rounded-lg p-6 sm:p-10 shadow-lg w-full max-w-lg md:w-1/2 lg:w-1/3">
         <div className="content">
           <blockquote className="text-2xl font-semibold italic text-center text-slate-400 mb-8">
             Simplify your{" "}
@@ -321,7 +205,7 @@ export default function SignUp() {
               fullWidth
             >
               Sign Up
-            </Button>{" "}
+            </Button>
             <Button
               variant="contained"
               color="info"
@@ -335,8 +219,7 @@ export default function SignUp() {
               }}
               fullWidth
             >
-              
-            <Link to="/signupViaEmail">Sign Up Using Email</Link>
+              <Link to="/signupViaEmail">Sign Up Using Email</Link>
             </Button>
           </form>
 
@@ -350,12 +233,14 @@ export default function SignUp() {
       </section>
 
       {/* Floating image */}
-      <section className="absolute bottom-10 right-10 z-20 floating-3d-image">
+      <section className="absolute bottom-10 right-10 z-20 animate-float">
         <div className="text-xl text-zinc-700 font-serif">{"</rahul>"}</div>
       </section>
 
-      <section className="absolute top-10 left-10 z-20 floating-3d-image">
-        <Link to="/">  <div className="text-xl text-zinc-700 font-serif">{"<rahul>"}</div></Link>
+      <section className="absolute top-10 left-10 z-20 animate-float">
+        <Link to="/">
+          <div className="text-xl text-zinc-700 font-serif">{"<rahul>"}</div>
+        </Link>
       </section>
 
       <ToastContainer />

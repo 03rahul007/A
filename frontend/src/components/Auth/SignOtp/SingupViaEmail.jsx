@@ -9,10 +9,11 @@ const SignupViaEmail = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [randomOtp, setRandomOtp] = useState("");
-const navigate = useNavigate();
+  const [resendDisabled, setResendDisabled] = useState(false);
+  const navigate = useNavigate();
+
   const sendOtp = async (e) => {
     e.preventDefault();
-
     if (!email) {
       toast.warn("Please enter a valid email.");
       return;
@@ -20,14 +21,13 @@ const navigate = useNavigate();
     setIsLoading(true);
 
     try {
-      // Generate and set the OTP
       const EmailOtp = Math.floor(100000 + Math.random() * 900000).toString();
       setRandomOtp(EmailOtp);
 
       const response = await fetch("http://localhost:3000/verifyEmail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp: EmailOtp }), // Send generated OTP to the server
+        body: JSON.stringify({ email, otp: EmailOtp }),
       });
 
       const contentType = response.headers.get("content-type");
@@ -38,6 +38,8 @@ const navigate = useNavigate();
         } else {
           toast.success("OTP has been sent to your email!");
           setOtpSent(true);
+          setResendDisabled(true);
+          setTimeout(() => setResendDisabled(false), 30000); // Resend OTP after 30 seconds
         }
       } else {
         toast.warn("Response was not in JSON format");
@@ -57,27 +59,25 @@ const navigate = useNavigate();
     }
 
     setIsLoading(true);
-    // Simulate OTP verification
     setTimeout(() => {
       setIsLoading(false);
       if (otp === randomOtp) {
         toast.success("OTP verified successfully!");
-        // Clear inputs after successful verification
         setEmail("");
-        // setOtp("");
+        setOtp("");
         setOtpSent(false);
         setRandomOtp("");
-        navigate('/dashboard')
+        navigate('/dashboard');
       } else {
         toast.error("Invalid OTP. Please try again.");
       }
-    }, 2000); // Replace this with real API call
+    }, 2000);
   };
 
   const resendOtp = () => {
-    setOtpSent(false); // Reset to send a new OTP
-    setOtp(""); // Clear the OTP field if needed
-    sendOtp(); // Call sendOtp to generate and send a new OTP
+    setOtpSent(false);
+    setOtp("");
+    sendOtp(); // Send a new OTP
   };
 
   return (
@@ -98,7 +98,7 @@ const navigate = useNavigate();
                 className="w-full p-3 border border-gray-300 rounded-lg"
                 placeholder="Enter your email"
                 required
-                name="email"
+                aria-label="Email"
               />
             </div>
           )}
@@ -115,6 +115,7 @@ const navigate = useNavigate();
                 placeholder="Enter OTP"
                 maxLength="6"
                 required
+                aria-label="OTP"
               />
             </div>
           )}
@@ -133,8 +134,9 @@ const navigate = useNavigate();
           <button
             className="mt-4 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 p-3 rounded-lg transition-all duration-300"
             onClick={resendOtp}
+            disabled={resendDisabled}
           >
-            Resend OTP
+            {resendDisabled ? "Resend OTP in 30s" : "Resend OTP"}
           </button>
         )}
       </div>

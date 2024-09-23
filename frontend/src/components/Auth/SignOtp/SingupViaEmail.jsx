@@ -24,7 +24,7 @@ const navigate = useNavigate();
       const EmailOtp = Math.floor(100000 + Math.random() * 900000).toString();
       setRandomOtp(EmailOtp);
 
-      const response = await fetch("http://localhost:3000/verifyEmail", {
+      const response = await fetch("https://a-iadm.onrender.com/verifyEmail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp: EmailOtp }), // Send generated OTP to the server

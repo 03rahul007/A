@@ -80,7 +80,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-screen flex flex-col md:justify-center items-start justify-start md:items-center lg:justify-center lg:items-center xl:justify-center xl:items-center text-white bg-gradient-to-br from-gray-800 to-black overflow-hidden">
+    <div className="relative w-full h-screen flex flex-col text-white bg-gradient-to-br from-gray-800 to-black overflow-hidden md:justify-center items-center justify-top md:items-center lg:justify-center lg:items-center xl:justify-center xl:items-center ">
       <style>
         {`@keyframes float {
           0% { transform: translateY(0); }
@@ -106,7 +106,7 @@ const Home = () => {
       ></div>
 
       {/* Content */}
-      <div className="relative z-10 text-center p-4 sm:p-8 bg-opacity-70 bg-black rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2">
+      <div className="relative z-10 text-center p-4 sm:p-8 bg-opacity-70 bg-black rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 mt-12">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
           Hey, I'm Rahul Verma
         </h1>
@@ -144,7 +144,7 @@ const Home = () => {
       {/* Newsletter Form */}
       <form
         onSubmit={sendMail}
-        className="absolute bottom-28 right-15 md:right-24 flex flex-col gap-4 md:flex-row items-center"
+        className="absolute bottom-72 lg:right-15 lg:bottom-28 lg:right-15 md:right-24 flex flex-col gap-4 md:flex-row items-center"
       >
         <span className="text-lg md:text-2xl text-zinc-600">Subscribe Us!</span>
         <div className="newsletter flex flex-col md:flex-row bg-transparent border border-zinc-800 items-center">

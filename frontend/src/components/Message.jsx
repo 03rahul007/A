@@ -24,7 +24,7 @@ const Message = () => {
       </div>
 
       {/* "Send Message" button visible on all screen sizes */}
-      <div className="md:hidden flex justify-center items-center absolute bottom-8 left-0 right-0">
+      <div className="lg:right-15 lg:bottom-28 lg:right-15 md:hidden flex justify-center items-center absolute bottom-48 left-0 right-0">
         <button className="px-6 py-3 bg-black text-white font-semibold rounded-full hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">
         <MessageModal />
         </button>

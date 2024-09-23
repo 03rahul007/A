@@ -1,6 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const style = {
   position: "absolute",
@@ -17,17 +19,17 @@ export default function MessageModal() {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [message, setMessage] = React.useState("");
-  const [loading, setLoading] = React.useState(false); // To show a loading state
+  const [loading, setLoading] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const sendApi = async (e) => {
-    e.preventDefault(); // Prevent page reload on form submit
+    e.preventDefault();
     setLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PORT}/message`, {
+      const response = await fetch(`https://a-iadm.onrender.com/message`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, message }),
@@ -39,26 +41,26 @@ export default function MessageModal() {
         const result = await response.json();
 
         if (!response.ok) {
-          alert(result.message); // Handle error message display (replace with Toastify if needed)
+          toast.error(result.message);
         } else {
-          alert("Message sent successfully!"); // Success message
+          toast.success("Message sent successfully!");
           setName("");
           setMessage("");
-          handleClose(); // Close modal on successful message send
+          handleClose();
         }
       } else {
-        alert("Response was not in JSON format");
+        toast.warn("Response was not in JSON format");
       }
     } catch (error) {
-      alert(`Error: ${error.message}`); // Show error message (replace with Toastify if needed)
+      toast.error(`Error: ${error.message}`);
     } finally {
-      setLoading(false); // Stop loading state
+      setLoading(false);
     }
   };
 
   return (
     <div>
-      <div onClick={handleOpen} className="text-sm">
+      <div onClick={handleOpen} className="text-sm cursor-pointer">
         Send Message
       </div>
 
@@ -70,11 +72,9 @@ export default function MessageModal() {
       >
         <Box sx={style}>
           <div className="dark:bg-slate-900 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl gap-4 flex flex-col">
-            <div className="">
-              <h3 className="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">
-                Want to say something...
-              </h3>
-            </div>
+            <h3 className="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">
+              Want to say something...
+            </h3>
 
             <form onSubmit={sendApi}>
               <div className="text-slate-500 dark:text-slate-400 mt-2 text-sm">
@@ -82,8 +82,8 @@ export default function MessageModal() {
                   <input
                     type="text"
                     name="name"
-                    value={name} // Controlled component
-                    className="p-4 bg-transparent border border-zinc-800 w-[25rem] outline-none"
+                    value={name}
+                    className="p-4 bg-transparent border border-zinc-800 w-full outline-none"
                     placeholder="Your Name..."
                     onChange={(e) => setName(e.target.value)}
                     required
@@ -91,19 +91,18 @@ export default function MessageModal() {
 
                   <textarea
                     name="message"
-                    value={message} // Controlled component
-                    className="p-4 bg-transparent border outline-none border-zinc-800"
+                    value={message}
+                    className="p-4 bg-transparent border outline-none border-zinc-800 w-full"
                     rows={5}
-                    cols={50}
                     placeholder="Write Message here..."
                     onChange={(e) => setMessage(e.target.value)}
                     required
                   ></textarea>
 
                   <button
-                    className="bg-slate-800 p-4"
+                    className="bg-slate-800 p-4 text-white w-full"
                     type="submit"
-                    disabled={loading} // Disable the button when loading
+                    disabled={loading}
                   >
                     {loading ? "Sending..." : "Send Message"}
                   </button>
@@ -113,6 +112,9 @@ export default function MessageModal() {
           </div>
         </Box>
       </Modal>
+
+      {/* Toastify Container for notifications */}
+      <ToastContainer autoClose={3000} />
     </div>
   );
 }

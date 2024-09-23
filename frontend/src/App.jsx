@@ -3,12 +3,10 @@ import SignUp from "./components/Auth/SignUp";
 import Login from "./components/Auth/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import { useApi } from "./Context/Provider";
-import { useEffect, useState } from "react";
 import Dashboard from "./components/Home/Dashboard";
 import ForgetPassword from "./components/Auth/ForgetPassword"
 import SignupViaEmail from "./components/Auth/SignOtp/SingupViaEmail";
-
+import NotFound from "./NotFound"
 const App = () => {
   return (
     <BrowserRouter>
@@ -31,6 +29,7 @@ const App = () => {
             <Route path="/forget-password" element={<ForgetPassword />} />
             <Route path="/signupViaEmail" element={<SignupViaEmail />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Stack>
       </Box>

@@ -9,11 +9,10 @@ const SignupViaEmail = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [randomOtp, setRandomOtp] = useState("");
-  const [resendDisabled, setResendDisabled] = useState(false);
-  const navigate = useNavigate();
-
+const navigate = useNavigate();
   const sendOtp = async (e) => {
     e.preventDefault();
+
     if (!email) {
       toast.warn("Please enter a valid email.");
       return;
@@ -21,13 +20,14 @@ const SignupViaEmail = () => {
     setIsLoading(true);
 
     try {
+      // Generate and set the OTP
       const EmailOtp = Math.floor(100000 + Math.random() * 900000).toString();
       setRandomOtp(EmailOtp);
 
-      const response = await fetch("https://a-iadm.onrender.com/verifyEmail", {
+      const response = await fetch("http://localhost:3000/verifyEmail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp: EmailOtp }),
+        body: JSON.stringify({ email, otp: EmailOtp }), // Send generated OTP to the server
       });
 
       const contentType = response.headers.get("content-type");
@@ -38,8 +38,6 @@ const SignupViaEmail = () => {
         } else {
           toast.success("OTP has been sent to your email!");
           setOtpSent(true);
-          setResendDisabled(true);
-          setTimeout(() => setResendDisabled(false), 30000); // Resend OTP after 30 seconds
         }
       } else {
         toast.warn("Response was not in JSON format");
@@ -59,25 +57,27 @@ const SignupViaEmail = () => {
     }
 
     setIsLoading(true);
+    // Simulate OTP verification
     setTimeout(() => {
       setIsLoading(false);
       if (otp === randomOtp) {
         toast.success("OTP verified successfully!");
+        // Clear inputs after successful verification
         setEmail("");
-        setOtp("");
+        // setOtp("");
         setOtpSent(false);
         setRandomOtp("");
-        navigate('/dashboard');
+        navigate('/dashboard')
       } else {
         toast.error("Invalid OTP. Please try again.");
       }
-    }, 2000);
+    }, 2000); // Replace this with real API call
   };
 
   const resendOtp = () => {
-    setOtpSent(false);
-    setOtp("");
-    sendOtp(); // Send a new OTP
+    setOtpSent(false); // Reset to send a new OTP
+    setOtp(""); // Clear the OTP field if needed
+    sendOtp(); // Call sendOtp to generate and send a new OTP
   };
 
   return (
@@ -98,7 +98,7 @@ const SignupViaEmail = () => {
                 className="w-full p-3 border border-gray-300 rounded-lg"
                 placeholder="Enter your email"
                 required
-                aria-label="Email"
+                name="email"
               />
             </div>
           )}
@@ -115,7 +115,6 @@ const SignupViaEmail = () => {
                 placeholder="Enter OTP"
                 maxLength="6"
                 required
-                aria-label="OTP"
               />
             </div>
           )}
@@ -134,9 +133,8 @@ const SignupViaEmail = () => {
           <button
             className="mt-4 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 p-3 rounded-lg transition-all duration-300"
             onClick={resendOtp}
-            disabled={resendDisabled}
           >
-            {resendDisabled ? "Resend OTP in 30s" : "Resend OTP"}
+            Resend OTP
           </button>
         )}
       </div>

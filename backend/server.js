@@ -34,6 +34,9 @@ app.use(UpdatePassword);
 app.use(Newsletter);
 app.use(OtpVerify);
 app.use(Message);
+app.get('/', (req, res) => {
+  res.send("Server Running ...");
+});
 // --------------------
 
 const port = process.env.PORT || 3000;

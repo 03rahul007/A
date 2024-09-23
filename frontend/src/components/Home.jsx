@@ -80,7 +80,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-screen flex flex-col justify-center items-center text-white bg-gradient-to-br from-gray-800 to-black overflow-hidden">
+    <div className="relative w-full h-screen flex flex-col md:justify-center items-start justify-start md:items-center lg:justify-center lg:items-center xl:justify-center xl:items-center text-white bg-gradient-to-br from-gray-800 to-black overflow-hidden">
       <style>
         {`@keyframes float {
           0% { transform: translateY(0); }
